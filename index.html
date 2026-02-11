@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Railway Bottleneck Analysis</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #ffffff;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .container {
+    text-align: center;
+  }
+  .caption {
+    font-size: 13px;
+    margin-top: 8px;
+  }
+  .legend-box {
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<svg width="800" height="400" viewBox="0 0 800 400">
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-size="20" fill="black">
+    Railway Bottleneck Analysis
+  </text>
+
+  <!-- Upstream Track -->
+  <line x1="100" y1="200" x2="320" y2="200"
+        stroke="#1f77b4" stroke-width="12" />
+
+  <!-- Bottleneck Segment -->
+  <line x1="320" y1="200" x2="480" y2="200"
+        stroke="#d62728" stroke-width="6" />
+
+  <!-- Downstream Track -->
+  <line x1="480" y1="200" x2="700" y2="200"
+        stroke="#1f77b4" stroke-width="12" />
+
+  <!-- Flow Arrows -->
+  <polygon points="260,190 280,200 260,210" fill="black"/>
+  <polygon points="440,190 460,200 440,210" fill="black"/>
+  <polygon points="640,190 660,200 640,210" fill="black"/>
+
+  <!-- Stations -->
+  <rect x="70" y="170" width="40" height="60"
+        fill="#cccccc" stroke="black"/>
+  <text x="90" y="160" text-anchor="middle" font-size="12">
+    Upstream
+  </text>
+
+  <rect x="690" y="170" width="40" height="60"
+        fill="#cccccc" stroke="black"/>
+  <text x="710" y="160" text-anchor="middle" font-size="12">
+    Downstream
+  </text>
+
+  <!-- Bottleneck Label -->
+  <text x="400" y="170" text-anchor="middle"
+        font-size="14" fill="#d62728">
+    Bottleneck Segment
+  </text>
+
+  <!-- Capacity & Utilization -->
+  <text x="400" y="230" text-anchor="middle" font-size="12">
+    Capacity: 10 trains/hour
+  </text>
+  <text x="400" y="250" text-anchor="middle" font-size="12">
+    Utilization: 95% (High Congestion)
+  </text>
+
+  <!-- Legend -->
+  <rect x="60" y="300" width="680" height="70"
+        fill="none" stroke="black"/>
+
+  <line x1="90" y1="330" x2="150" y2="330"
+        stroke="#1f77b4" stroke-width="12"/>
+  <text x="170" y="335" font-size="12">
+    Normal Capacity Track
+  </text>
+
+  <line x1="360" y1="330" x2="420" y2="330"
+        stroke="#d62728" stroke-width="6"/>
+  <text x="440" y="335" font-size="12">
+    Bottleneck (Reduced Capacity)
+  </text>
+
+  <polygon points="610,320 630,330 610,340" fill="black"/>
+  <text x="650" y="335" font-size="12">
+    Flow Direction
+  </text>
+
+</svg>
+
+<div class="caption">
+  A bottleneck is a reduced-capacity segment that limits overall system throughput.
+</div>
+
+</div>
+
+</body>
+</html>

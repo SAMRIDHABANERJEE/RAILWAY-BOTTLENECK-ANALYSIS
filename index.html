@@ -2,112 +2,207 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Railway Bottleneck Analysis</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Wisher 🎉</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #ffffff;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  .container {
-    text-align: center;
-  }
-  .caption {
-    font-size: 13px;
-    margin-top: 8px;
-  }
-  .legend-box {
-    font-size: 12px;
-  }
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    font-family:Georgia,serif;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    padding:20px;
+}
+.start-screen{
+    background:white;
+    padding:40px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,0.3);
+    width:100%;
+    max-width:400px;
+}
+.start-screen h2{font-size:26px;color:#764ba2;margin-bottom:5px;}
+.start-screen p{color:#888;font-size:14px;margin-bottom:5px;}
+.start-screen input[type="text"]{
+    width:100%;padding:12px 18px;margin-top:15px;
+    border-radius:30px;border:2px solid #ccc;font-size:16px;outline:none;transition:border 0.3s;
+}
+.start-screen input[type="text"]:focus{border-color:#764ba2;}
+.start-screen input[type="file"]{
+    width:100%;padding:10px;margin-top:15px;
+    border-radius:12px;border:2px dashed #ccc;font-size:14px;cursor:pointer;background:#fafafa;
+}
+.start-screen button{
+    margin-top:22px;padding:13px 35px;border:none;border-radius:30px;
+    background:linear-gradient(135deg,#667eea,#764ba2);color:white;font-size:18px;cursor:pointer;transition:transform 0.2s;
+}
+.start-screen button:hover{transform:scale(1.05)}
+.birthday-card{
+    display:none;
+    background:linear-gradient(145deg,#fff9ff,#ede8ff);
+    padding:45px 40px;border-radius:30px;text-align:center;
+    max-width:640px;width:100%;
+    box-shadow:0 20px 60px rgba(0,0,0,0.35);
+    animation:fadeIn 0.8s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:scale(0.85)}to{opacity:1;transform:scale(1)}}
+.confetti{font-size:28px;letter-spacing:6px;margin-bottom:10px;}
+.photo-container{
+    width:180px;height:180px;margin:0 auto 20px;
+    border-radius:50%;overflow:hidden;border:6px solid #764ba2;
+    box-shadow:0 6px 20px rgba(118,75,162,0.4);
+}
+.photo-container img{width:100%;height:100%;object-fit:cover;}
+.happy-birthday{
+    font-size:36px;font-weight:bold;
+    background:linear-gradient(135deg,#667eea,#764ba2,#f093fb);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;
+}
+.name{font-size:42px;color:#764ba2;margin:8px 0 20px;font-style:italic;}
+.divider{width:60px;height:3px;background:linear-gradient(135deg,#667eea,#764ba2);margin:0 auto 20px;border-radius:2px;}
+.message{
+    font-size:18px;color:#444;margin:0 auto 25px;
+    line-height:1.9;max-width:520px;white-space:pre-line;font-style:italic;
+}
+.wish-type-badge{
+    display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;font-size:12px;padding:4px 14px;border-radius:20px;
+    margin-bottom:18px;letter-spacing:1px;text-transform:uppercase;
+}
+.buttons{margin-top:10px;}
+.button{
+    padding:13px 30px;border:none;border-radius:40px;font-size:16px;
+    cursor:pointer;margin:6px;background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;transition:transform 0.2s;
+}
+.button:hover{transform:scale(1.05)}
+.button.outline{background:transparent;border:2px solid #764ba2;color:#764ba2;}
 </style>
 </head>
 <body>
 
-<div class="container">
-
-<svg width="800" height="400" viewBox="0 0 800 400">
-
-  <!-- Title -->
-  <text x="400" y="35" text-anchor="middle" font-size="20" fill="black">
-    Railway Bottleneck Analysis
-  </text>
-
-  <!-- Upstream Track -->
-  <line x1="100" y1="200" x2="320" y2="200"
-        stroke="#1f77b4" stroke-width="12" />
-
-  <!-- Bottleneck Segment -->
-  <line x1="320" y1="200" x2="480" y2="200"
-        stroke="#d62728" stroke-width="6" />
-
-  <!-- Downstream Track -->
-  <line x1="480" y1="200" x2="700" y2="200"
-        stroke="#1f77b4" stroke-width="12" />
-
-  <!-- Flow Arrows -->
-  <polygon points="260,190 280,200 260,210" fill="black"/>
-  <polygon points="440,190 460,200 440,210" fill="black"/>
-  <polygon points="640,190 660,200 640,210" fill="black"/>
-
-  <!-- Stations -->
-  <rect x="70" y="170" width="40" height="60"
-        fill="#cccccc" stroke="black"/>
-  <text x="90" y="160" text-anchor="middle" font-size="12">
-    Upstream
-  </text>
-
-  <rect x="690" y="170" width="40" height="60"
-        fill="#cccccc" stroke="black"/>
-  <text x="710" y="160" text-anchor="middle" font-size="12">
-    Downstream
-  </text>
-
-  <!-- Bottleneck Label -->
-  <text x="400" y="170" text-anchor="middle"
-        font-size="14" fill="#d62728">
-    Bottleneck Segment
-  </text>
-
-  <!-- Capacity & Utilization -->
-  <text x="400" y="230" text-anchor="middle" font-size="12">
-    Capacity: 10 trains/hour
-  </text>
-  <text x="400" y="250" text-anchor="middle" font-size="12">
-    Utilization: 95% (High Congestion)
-  </text>
-
-  <!-- Legend -->
-  <rect x="60" y="300" width="680" height="70"
-        fill="none" stroke="black"/>
-
-  <line x1="90" y1="330" x2="150" y2="330"
-        stroke="#1f77b4" stroke-width="12"/>
-  <text x="170" y="335" font-size="12">
-    Normal Capacity Track
-  </text>
-
-  <line x1="360" y1="330" x2="420" y2="330"
-        stroke="#d62728" stroke-width="6"/>
-  <text x="440" y="335" font-size="12">
-    Bottleneck (Reduced Capacity)
-  </text>
-
-  <polygon points="610,320 630,330 610,340" fill="black"/>
-  <text x="650" y="335" font-size="12">
-    Flow Direction
-  </text>
-
-</svg>
-
-<div class="caption">
-  A bottleneck is a reduced-capacity segment that limits overall system throughput.
+<div class="start-screen" id="startScreen">
+    <h2>🎂 Birthday Wisher</h2>
+    <p>Create a beautiful birthday card instantly</p>
+    <input type="text" id="username" placeholder="✏️  Enter Name">
+    <input type="file" id="photoUpload" accept="image/*">
+    <button onclick="generateWish()">Create Wish ✨</button>
 </div>
 
+<div class="birthday-card" id="birthdayCard">
+    <div class="confetti">🎊 🎉 🎈</div>
+    <div class="photo-container">
+        <img id="displayPhoto" src="" alt="Birthday Photo">
+    </div>
+    <div class="happy-birthday">Happy Birthday</div>
+    <div class="name" id="displayName"></div>
+    <div class="wish-type-badge" id="wishBadge"></div>
+    <div class="divider"></div>
+    <div class="message" id="messageText"></div>
+    <div class="confetti">🎁 🕯️ 🌟</div>
+    <div class="buttons">
+        <button class="button" onclick="downloadCard()">Download Wish 📥</button>
+        <button class="button outline" onclick="shuffleWish()">New Wish 🔀</button>
+        <button class="button outline" onclick="goBack()">New Person 🔁</button>
+    </div>
 </div>
 
+<script>
+const wishes = [
+    {type:"English Rhyme",message:"Roses are red, violets are blue,\nBirthdays are special, especially for you!\nMay laughter and joy fill up your day,\nAnd happiness never fade away. 🌹"},
+    {type:"Hindi Shayari",message:"Zindagi mein khushiyan hazaar aayein,\nHar pal mein khwaab aur pyaar aayein,\nJab bhi aaye tera birthday yeh,\nDuniya bhar ki bahaaren tere dwar aayein. 🌸"},
+    {type:"Motivational Wish",message:"Today is YOUR day — own it, celebrate it!\nYou have the heart of a champion and the soul of a dreamer.\nMay this birthday mark the beginning of your greatest chapter yet.\nKeep shining, keep rising! 🚀✨"},
+    {type:"Urdu Shayari",message:"Phoolon ki tarah mehakti rahe zindagi tumhari,\nChaand sitaron si chamakti rahe zindagi tumhari,\nHum toh bas ek dua karte hain,\nHar khushi se bhaari rahe zindagi tumhari. 🌙"},
+    {type:"Funny & Warm",message:"Another year older? Nah, just a classic edition getting better with time! 😄\nThey say wine improves with age — and so do you!\nHere's to you: the coolest, funniest, most amazing person today.\nHappy Birthday, legend! 🥂🎉"},
+    {type:"Poetic Blessing",message:"May the stars align in your favour today,\nMay sunshine follow you all the way,\nMay every dream you've held so dear,\nBloom into reality this beautiful year. 🌟"},
+    {type:"Dosti Shayari",message:"Yaar tere jaisa na koi tha, na koi hai,\nTeri dosti mein hi asar hai, teri hansi mein raai hai,\nAaj tera din hai, aaj teri bari hai,\nHappy Birthday dost, tu sab se pyaara yaar hai. 🤝❤️"},
+    {type:"Soulful Wish",message:"On your birthday, I wish you not just cake and gifts,\nBut peace in your heart when life gets tough,\nStrength in your bones when the road is rough,\nAnd love that's always more than enough. 💜"},
+    {type:"Inspirational Shayari",message:"Teri har subah nayi roshni laaye,\nTeri har sham sukoon ki bahar laaye,\nZindagi ki har raah par teri jeet ho,\nYeh dil se dua hai, yeh teri birthday ki saugaat ho. 🌅"},
+    {type:"Cheerful Rhyme",message:"Hip hip hooray, it's your special day! 🎈\nDance like no one is watching, laugh the clouds away,\nEat the cake, blow the candles, make a big loud cheer,\nYou deserve the best of everything — every single year! 🎂"}
+];
+
+let currentName = "";
+
+function generateWish() {
+    const nameInput = document.getElementById("username").value.trim();
+    if (nameInput) currentName = nameInput;
+    if (!currentName) { alert("Please enter a name!"); return; }
+
+    const photoInput = document.getElementById("photoUpload");
+    const pick = wishes[Math.floor(Math.random() * wishes.length)];
+
+    document.getElementById("displayName").innerText = currentName + " 🎂";
+    document.getElementById("messageText").innerText = pick.message;
+    document.getElementById("wishBadge").innerText = pick.type;
+
+    if (photoInput.files && photoInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e){ document.getElementById("displayPhoto").src = e.target.result; };
+        reader.readAsDataURL(photoInput.files[0]);
+    } else {
+        document.getElementById("displayPhoto").src = "https://via.placeholder.com/200x200/764ba2/ffffff?text=🎂";
+    }
+
+    document.getElementById("startScreen").style.display = "none";
+    document.getElementById("birthdayCard").style.display = "block";
+}
+
+function shuffleWish() {
+    const pick = wishes[Math.floor(Math.random() * wishes.length)];
+    document.getElementById("messageText").innerText = pick.message;
+    document.getElementById("wishBadge").innerText = pick.type;
+}
+
+function goBack() {
+    document.getElementById("birthdayCard").style.display = "none";
+    document.getElementById("startScreen").style.display = "block";
+    document.getElementById("username").value = "";
+    document.getElementById("photoUpload").value = "";
+    currentName = "";
+}
+
+function downloadCard() {
+    const card = document.getElementById("birthdayCard");
+    const btns = document.querySelector(".buttons");
+    btns.style.display = "none";
+
+    setTimeout(function() {
+        html2canvas(card, {
+            scale: 3,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: "#ede8ff",
+            logging: false,
+            imageTimeout: 15000,
+            removeContainer: true,
+            onclone: function(clonedDoc) {
+                var clonedCard = clonedDoc.getElementById("birthdayCard");
+                clonedCard.style.background = "linear-gradient(145deg, #fff9ff, #ede8ff)";
+                clonedCard.style.boxShadow = "none";
+                clonedCard.style.animation = "none";
+            }
+        }).then(function(canvas) {
+            btns.style.display = "block";
+            canvas.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "Birthday_Wish_" + currentName.replace(/\s+/g,"_") + ".png";
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 300);
+            }, "image/png", 1.0);
+        }).catch(function(err) {
+            btns.style.display = "block";
+            console.error(err);
+            alert("Download failed. Please try again.");
+        });
+    }, 150);
+}
+</script>
 </body>
 </html>
